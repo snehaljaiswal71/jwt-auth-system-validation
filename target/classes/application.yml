@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: jwt-auth-system
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/authsystem}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+
+server:
+  port: ${PORT:8080}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:c3VwZXItc2VjcmV0LWRldmVsb3BtZW50LWtleS1mb3Itand0LWF1dGgtc3lzdGVtLWNoYW5nZS1pbi1wcm9kdWN0aW9uLTEyMzQ1Njc4OTA=}
+    expiration: ${JWT_EXPIRATION:30m}
+    issuer: jwt-auth-system
+  otp:
+    length: 6
+    ttl: 5m
+    max-attempts: 5
+    expose-in-response: ${OTP_EXPOSE_IN_RESPONSE:true}
+  geo:
+    lookup-url: http://ip-api.com/json/
+    timeout: 3s
+    fail-open: ${GEO_FAIL_OPEN:false}
+    trust-forwarded-header: ${GEO_TRUST_FORWARDED_HEADER:false}
+    blocked-countries:
+      - SY
+      - AF
+      - IR
+      - KP
+      - CU
+      - SD
+      - RU
+      - BY
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:5173
